@@ -1,32 +1,63 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <navbar :title="title" :leftText="isReturn ? '返回' : ''" :leftArrow="isReturn" @back="back"></navbar>
     <router-view/>
+      <van-tabbar v-model="active" active-color="#836afe" router v-if="isLogin">
+          <van-tabbar-item to="home" icon="home-o">首页</van-tabbar-item>
+          <van-tabbar-item to="topup" icon="balance-o">充值</van-tabbar-item>
+          <van-tabbar-item to="graborder" icon="flag-o">抢单</van-tabbar-item>
+          <van-tabbar-item to="record" icon="coupon-o">记录</van-tabbar-item>
+          <van-tabbar-item to="mine" icon="manager-o">我的</van-tabbar-item>
+      </van-tabbar>
+      <van-overlay :show="isMask">
+          <van-loading type="spinner" size="48px" />
+      </van-overlay>
   </div>
 </template>
 
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+export default {
+  data() {
+    return {
+      isLogin: false,
+      active: 0,
+      title: "首页",
+      isReturn: false,
+      isMask: true
     }
-  }
+  },
+  created() {
+    let path = this.$route.path;
+    if (path != "/login" || path == "/home" || path == "/topup" || path == "/graborder" || path == "/record" || path == "/mine") this.isLogin = true;
+  },
+  mounted() {
+    this.isMask = false;
+  },
+  watch: {
+    $route(to, from) {
+      let noShowBackList = ['/', '/home', '/topup', '/graborder', '/record', '/mine'];
+      this.isReturn = (noShowBackList.indexOf(to.path) >-1 ? false : true );
+      this.title = to.meta.title;
+    }
+  },
+  methods: {
+    back() {
+      this.$router.go(-1);
+    }
+  },
 }
+
+</script>
+
+<style lang="less">
+  html {
+    background-color: #f7f7f7;
+  }
+  .van-loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+  }
 </style>
