@@ -1,11 +1,11 @@
 <template>
   <div class="topup">
-        <van-tabs v-model="active" line-height="1px" line-width="33.3%" color="#8b64fe" swipeable>
+        <van-tabs v-model="active" line-height="1px" line-width="33.3%" color="#8b64fe">
             <van-tab v-for="(item, index) in tab" :title="item" :key="index">
                 <div class="content">
                     <div class="balance">
                         <span>当前余额：</span>
-                        <span>100 元</span>
+                        <span>{{ balance }} 元</span>
                     </div>
                     <div class="input-balance">
                         <b class="title">输入金额（元）</b>
@@ -29,6 +29,7 @@
                             <span :class="fastAmountAct == index ? 'active' : ''" v-for="(value, index) in fastAmount" :key="index" @click="fastAmountAct = index; money = value.toString()">{{ value }}</span>
                         </div>
                         <p class="notice">温馨提示：平台银行帐号随时更换，每次存款请到充值页面获取最新帐号，如入款至已过期帐号，平台无法查收，恕不负责！</p>
+                        <van-button color="#8b64fe" block @click="topupFun">确认充值</van-button>
                     </div>
                 </div>
             </van-tab>
@@ -42,11 +43,26 @@ export default {
         active: 0,
         tab: ["网银转卡", "支付宝转卡", "微信转卡"],
         show: false,
+        balance: 0,
         money: '100',
         fastAmount: [100, 500, 1000, 2000, 5000, 10000],
         fastAmountAct: 0
     };
-  }
+  },
+  created() {
+      this.$http.get(`getUserInfo?userid=${this.$store.state.userId}`).then(response => {
+        if (response.body.status) {
+          this.balance = response.body.data.money;
+        }
+      }, response => {
+        this.$toast("获取失败");
+      })
+  },
+  methods: {
+      topupFun() {
+
+      }
+  },
 };
 </script>
 <style lang="less">
@@ -111,6 +127,9 @@ export default {
                 .notice {
                     font-size: 14px;
                     color: #666;
+                }
+                .van-button {
+                    margin-top: 30px;
                 }
             }
         }

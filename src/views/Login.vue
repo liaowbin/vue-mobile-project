@@ -45,7 +45,7 @@ export default {
     }
   },
   created() {
-    if (localStorage.getItem("loginInfo")) {
+    if (localStorage.getItem("logininfo")) {
       this.$router.push('home');
     }
   },
@@ -55,17 +55,16 @@ export default {
         mobile: values.user,
         password: values.pwd
       }).then(response => {
-        if (response.status == 200) {
-          if (!response.body.status) {
-            this.$toast(response.body.info);
-          }else {
-            if (this.isCheck) {
-              var val = { "username": values.user, "password": values.pwd }
-              localStorage.setItem("loginInfo", JSON.stringify(val));
-            }
-            this.$toast('登录成功！');
-            this.$router.push('home');
+        if (!response.body.status) {
+          this.$toast(response.body.info);
+        }else {
+          if (this.isCheck) {
+            var val = { "username": values.user, "password": values.pwd }
+            localStorage.setItem("logininfo", JSON.stringify(val));
           }
+          localStorage.setItem("userinfo", JSON.stringify(response.body.data));
+          this.$toast('登录成功！');
+          this.$router.push('home');
         }
       }, response => {
         this.$toast('登录失败！');

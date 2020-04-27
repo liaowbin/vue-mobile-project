@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
+
 import Login from '../views/Login.vue'
-import Home from '../views/Home.vue'
-import Topup from '../views/Topup.vue'
+import Home from '../views/home/Home.vue'
+import Topup from '../views/topup/Topup.vue'
+import Graborder from '../views/single/Graborder.vue'
 
 Vue.use(VueRouter)
 
@@ -23,14 +26,24 @@ Vue.use(VueRouter)
     path: '/home',
     component: Home,
     meta: {
-      title: "首页"
+      title: "首页",
+      isLogin: true
     }
   },
   {
     path: '/topup',
     component: Topup,
     meta: {
-      title: "充值"
+      title: "充值",
+      isLogin: true
+    }
+  },
+  {
+    path: '/graborder',
+    component: Graborder,
+    meta: {
+      title: "抢单",
+      isLogin: true
     }
   }
 ]
@@ -43,8 +56,11 @@ const router = new VueRouter({
 
 router.beforeEach(function(to, from, next) {
   if (to.meta.isLogin) {
-    if (localStorage.getItem("loginInfo")) {
+    if (localStorage.getItem("logininfo") && localStorage.getItem("userinfo")) {
       next(); //表示已经登录
+      // 获取 localStorage 里存储的userid 随后把id传到vuex 使得每个页面都能获取到id
+      let id = JSON.parse(localStorage.getItem("userinfo")).id;
+      store.commit('initUserId', id);
     } else {
       //next可以传递一个路由对象作为参数 表示需要跳转到的页面
       next({
