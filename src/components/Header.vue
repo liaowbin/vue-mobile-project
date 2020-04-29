@@ -19,8 +19,12 @@ export default {
 
 <style lang="less">
     .van-nav-bar {
+        position: fixed;
+        width: 100%;
         background-color: #836afe;
-        div {
+        div,
+        .van-icon,
+        .van-nav-bar__text {
             color: #fff!important;
         }
     }

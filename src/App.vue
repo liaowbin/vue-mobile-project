@@ -1,17 +1,16 @@
 <template>
   <div id="app">
     <navbar :title="title" :leftText="isReturn ? '返回' : ''" :leftArrow="isReturn" @back="back"></navbar>
-    <router-view/>
+    <div class="main" :class="isLogin ? 'fixed-tabbar' : ''">
+      <router-view/>
+    </div>
     <van-tabbar v-model="active" active-color="#836afe" router v-if="isLogin">
         <van-tabbar-item to="home" icon="home-o">首页</van-tabbar-item>
         <van-tabbar-item to="topup" icon="balance-o">充值</van-tabbar-item>
         <van-tabbar-item to="graborder" icon="flag-o">抢单</van-tabbar-item>
-        <van-tabbar-item to="record" icon="coupon-o">记录</van-tabbar-item>
+        <van-tabbar-item to="recording" icon="coupon-o">记录</van-tabbar-item>
         <van-tabbar-item to="mine" icon="manager-o">我的</van-tabbar-item>
     </van-tabbar>
-    <van-overlay :show="isMask">
-        <van-loading type="spinner" size="48px" />
-    </van-overlay>
   </div>
 </template>
 
@@ -22,23 +21,17 @@ export default {
       isLogin: false,
       active: 0,
       title: "首页",
-      isReturn: false,
-      isMask: true
+      isReturn: false
     }
   },
   created() {
     this.getStatus();
   },
-  mounted() {
-    this.isMask = false;
-  },
   watch: {
     $route(to, from) {
       // 监听路由一改变 显示对应的标题及判断是否需要返回
-      let noShowBackList = ['/', '/home', '/topup', '/graborder', '/record', '/mine'];
+      let noShowBackList = ['/', '/home', '/topup', '/graborder', '/recording', '/mine'];
       this.isReturn = (noShowBackList.indexOf(to.path) >-1 ? false : true );
-      this.title = to.meta.title;
-
       this.getStatus();
     }
   },
@@ -48,14 +41,34 @@ export default {
     },
     getStatus() {
       // 设置哪些页面需要显示tabBar
+      this.title = this.$route.meta.title;
       let path = this.$route.path;
-      if (path != "/login" || path == "/home" || path == "/topup" || path == "/graborder" || path == "/record" || path == "/mine") this.isLogin = true;
+      if (path == "/home" || path == "/topup" || path == "/graborder" || path == "/recording" || path == "/mine") {
+        this.isLogin = true;
+        // 监听路由变化让对应的tabbar高亮
+        switch (path) {
+          case '/home':
+            this.active = 0;
+            break;
+          case '/topup':
+            this.active = 1;
+            break;
+          case '/graborder':
+            this.active = 2;
+            break;
+          case '/recording':
+            this.active = 3;
+            break;
+          case '/mine':
+            this.active = 4;
+            break;
+        }
+      }else {
+        this.isLogin = false;
+      }
       if (!localStorage.getItem("logininfo") || !localStorage.getItem("userinfo")) {
         this.isLogin = false;
-        this.active = 0;
       }
-      
-      console.log(this.isLogin);
     }
   },
 }
@@ -66,10 +79,12 @@ export default {
   html {
     background-color: #f7f7f7;
   }
-  .van-loading {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+  .main {
+    // height: calc(100vh - 46px);
+    padding-top: 46px;
+  }
+  .fixed-tabbar {
+    // height: calc(100vh - 46px - 50px);
+    padding-bottom: 50px;
   }
 </style>

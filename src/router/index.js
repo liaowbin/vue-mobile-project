@@ -5,7 +5,10 @@ import store from '../store'
 import Login from '../views/Login.vue'
 import Home from '../views/home/Home.vue'
 import Topup from '../views/topup/Topup.vue'
+  import FinancialManage from '../views/topup/FinancialManage.vue'
 import Graborder from '../views/single/Graborder.vue'
+import Recording from '../views/order/Recording.vue'
+import Mine from '../views/mine/index.vue'
 
 Vue.use(VueRouter)
 
@@ -39,10 +42,34 @@ Vue.use(VueRouter)
     }
   },
   {
+    path: "/topup/financialmanage",
+    component: FinancialManage,
+    meta: {
+      title: "定期理财",
+      isLogin: true
+    }
+  },
+  {
     path: '/graborder',
     component: Graborder,
     meta: {
       title: "抢单",
+      isLogin: true
+    }
+  },
+  {
+    path: '/recording',
+    component: Recording,
+    meta: {
+      title: "记录",
+      isLogin: true
+    }
+  },
+  {
+    path: '/mine',
+    component: Mine,
+    meta: {
+      title: "我",
       isLogin: true
     }
   }

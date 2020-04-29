@@ -8,11 +8,20 @@
             </van-swipe>
         </div>
         <van-grid :border="false" :column-num="4">
-            <van-grid-item v-for="(item, index) in menuList" :key="index">
+            <router-link tag="van-grid-item" :to="item.url" v-for="(item, index) in menuList" :key="index">
                 <van-image :src="item.imgSrc" />
                 <span>{{ item.text }}</span>
-            </van-grid-item>
+            </router-link>
         </van-grid>
+        <div class="notice">
+            <van-notice-bar color="#666" background="#f7f7f7" :left-icon="require('@/assets/images/notice.png')" :text="notice"></van-notice-bar>
+        </div>
+        <div class="link">
+            <router-link to="/home/platformintroduction">平台介绍</router-link>
+            <router-link to="/home/cooperativeagent">合作代理</router-link>
+            <router-link to="/home/ruledescription">规则说明</router-link>
+            <router-link to="/home/commonproblem">常见问题</router-link>
+        </div>
     </div>
 </template>
 <script>
@@ -22,32 +31,52 @@ export default {
             bannerList: [],
             menuList: [
                 {
+                    url: "/topup/financialmanage",
                     imgSrc: require('@/assets/images/icon01.png'),
                     text: "定期理财"
                 },
                 {
+                    url: "/topup",
                     imgSrc: require('@/assets/images/icon02.png'),
                     text: "充值管理"
                 },
                 {
+                    url: "/topup/withdrawalmanage",
                     imgSrc: require('@/assets/images/icon03.png'),
                     text: "提现管理"
                 },
                 {
+                    url: "/mine/invitefriends",
                     imgSrc: require('@/assets/images/icon04.png'),
                     text: "邀请好友"
                 }
-            ]
+            ],
+            notice: ""
         }
     },
     created() {
-        this.$http.get('getBanner').then(response => {
-            if (response.body.status) {
-                this.bannerList = response.body.data;
-            }
-        }, response => {
-            this.$toast("获取轮播图失败！");
-        });
+        this.getBanner();
+        this.getNotice();
+    },
+    methods: {
+        getBanner() {
+            this.$http.get('Wap/Api/getBanner').then(response => {
+                if (response.body.status) {
+                    this.bannerList = response.body.data;
+                }
+            }, response => {
+                this.$toast("获取轮播图失败！");
+            });
+        },
+        getNotice() {
+            this.$http.get('Wap/Api/getSystemNotice?id=9').then(response => {
+                if (response.body.status) {
+                    this.notice = response.body.data.content;
+                }
+            }, response => {
+                this.$toast("获取失败！");
+            });
+        }
     },
 }
 </script>
@@ -75,6 +104,22 @@ export default {
             .van-image {
                 width: 40px;
                 height: 40px;
+            }
+        }
+        .notice {
+            padding-bottom: 10px;
+            .van-icon__image {
+                width: auto;
+                margin-right: 5px;
+            }
+        }
+        .link {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 30px;
+            a {
+                font-size: 14px;
+                color: #666;
             }
         }
     }

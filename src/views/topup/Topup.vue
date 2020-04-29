@@ -50,7 +50,7 @@ export default {
     };
   },
   created() {
-      this.$http.get(`getUserInfo?userid=${this.$store.state.userId}`).then(response => {
+      this.$http.get(`Wap/Api/getUserInfo?userid=${this.$store.state.userId}`).then(response => {
         if (response.body.status) {
           this.balance = response.body.data.money;
         }

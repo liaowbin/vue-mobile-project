@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     onSubmit(values) {
-      this.$http.post('login', {
+      this.$http.post('Wap/Api/login', {
         mobile: values.user,
         password: values.pwd
       }).then(response => {
