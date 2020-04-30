@@ -50,17 +50,25 @@ export default {
     };
   },
   created() {
+      this.$toast.loading({
+        message: '加载中...',
+        duration: 0,
+        forbidClick: true,
+      });
       this.$http.get(`Wap/Api/getUserInfo?userid=${this.$store.state.userId}`).then(response => {
         if (response.body.status) {
           this.balance = response.body.data.money;
+          this.$toast.clear();
         }
       }, response => {
         this.$toast("获取失败");
+        this.$toast.clear();
       })
   },
   methods: {
       topupFun() {
-
+        this.money = parseFloat(this.money);
+        this.$router.push({ path: '/topup/topupsubmit', query: { money: this.money, payType: this.active + 1 }});
       }
   },
 };

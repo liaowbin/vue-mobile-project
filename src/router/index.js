@@ -4,11 +4,15 @@ import store from '../store'
 
 import Login from '../views/Login.vue'
 import Home from '../views/home/Home.vue'
+  import Artice from '../views/home/Artice.vue'
 import Topup from '../views/topup/Topup.vue'
   import FinancialManage from '../views/topup/FinancialManage.vue'
+  import WithdrawalManage from '../views/topup/WithdrawalManage.vue'
+  import TopupSubmit from '../views/topup/TopupSubmit.vue'
 import Graborder from '../views/single/Graborder.vue'
 import Recording from '../views/order/Recording.vue'
 import Mine from '../views/mine/index.vue'
+  import InviteFriends from '../views/mine/InviteFriends.vue'
 
 Vue.use(VueRouter)
 
@@ -34,6 +38,13 @@ Vue.use(VueRouter)
     }
   },
   {
+    path: '/home/artice',
+    component: Artice,
+    meta: {
+      title: ""
+    }
+  },
+  {
     path: '/topup',
     component: Topup,
     meta: {
@@ -45,7 +56,23 @@ Vue.use(VueRouter)
     path: "/topup/financialmanage",
     component: FinancialManage,
     meta: {
-      title: "定期理财",
+      title: "利息宝",
+      isLogin: true
+    }
+  },
+  {
+    path: "/topup/withdrawalmanage",
+    component: WithdrawalManage,
+    meta: {
+      title: "提现",
+      isLogin: true
+    }
+  },
+  {
+    path: "/topup/topupsubmit",
+    component: TopupSubmit,
+    meta: {
+      title: "充值提交",
       isLogin: true
     }
   },
@@ -70,6 +97,14 @@ Vue.use(VueRouter)
     component: Mine,
     meta: {
       title: "我",
+      isLogin: true
+    }
+  },
+  {
+    path: '/mine/invitefriends',
+    component: InviteFriends,
+    meta: {
+      title: "邀请好友",
       isLogin: true
     }
   }

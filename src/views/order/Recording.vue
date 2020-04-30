@@ -5,7 +5,6 @@
             <van-pull-refresh
             v-model="isLoading"
             success-text="刷新成功"
-            disabled
             @refresh="onRefresh"
             >
             <div class="content">
@@ -63,7 +62,6 @@ export default {
         if (response.body.status) {
           this.orderList = response.body.data;
           this.$toast.clear();
-          console.log(response.body.data)
         }
       }, response => {
         this.$toast.clear();
@@ -92,6 +90,9 @@ export default {
         border-radius: 20px;
         background-color: #836afe;
         }
+    }
+    .van-tabs__content {
+        padding-bottom: 50px;
     }
     .content {
         width: 92%;

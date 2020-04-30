@@ -17,10 +17,10 @@
             <van-notice-bar color="#666" background="#f7f7f7" :left-icon="require('@/assets/images/notice.png')" :text="notice"></van-notice-bar>
         </div>
         <div class="link">
-            <router-link to="/home/platformintroduction">平台介绍</router-link>
-            <router-link to="/home/cooperativeagent">合作代理</router-link>
-            <router-link to="/home/ruledescription">规则说明</router-link>
-            <router-link to="/home/commonproblem">常见问题</router-link>
+            <router-link to="/home/artice?id=1">平台介绍</router-link>
+            <router-link to="/home/artice?id=5">合作代理</router-link>
+            <router-link to="/home/artice?id=6">规则说明</router-link>
+            <router-link to="/home/artice?id=8">常见问题</router-link>
         </div>
     </div>
 </template>
@@ -60,21 +60,35 @@ export default {
     },
     methods: {
         getBanner() {
+            this.$toast.loading({
+                message: '加载中...',
+                duration: 0,
+                forbidClick: true,
+            });
             this.$http.get('Wap/Api/getBanner').then(response => {
                 if (response.body.status) {
                     this.bannerList = response.body.data;
+                    this.$toast.clear();
                 }
             }, response => {
                 this.$toast("获取轮播图失败！");
+                this.$toast.clear();
             });
         },
         getNotice() {
+            this.$toast.loading({
+                message: '加载中...',
+                duration: 0,
+                forbidClick: true,
+            });
             this.$http.get('Wap/Api/getSystemNotice?id=9').then(response => {
                 if (response.body.status) {
                     this.notice = response.body.data.content;
+                    this.$toast.clear();
                 }
             }, response => {
                 this.$toast("获取失败！");
+                this.$toast.clear();
             });
         }
     },

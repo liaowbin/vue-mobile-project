@@ -10,7 +10,7 @@ Vue.http.options.emulateJSON = true;
 
 import {
   Tabbar, TabbarItem, NavBar, Button, Field, Form, Checkbox, CheckboxGroup, Toast, Swipe, SwipeItem, Lazyload, Grid, GridItem, Image as VanImage,
-  Overlay, Loading, Tab, Tabs, NumberKeyboard, PullRefresh, NoticeBar  
+  Overlay, Loading, Tab, Tabs, NumberKeyboard, PullRefresh, NoticeBar, Dialog, Uploader   
 } from 'vant';
 
 Vue.use(Tabbar);
@@ -29,6 +29,8 @@ Vue.use(Tab).use(Tabs);
 Vue.use(NumberKeyboard);
 Vue.use(PullRefresh);
 Vue.use(NoticeBar);
+Vue.use(Dialog);
+Vue.use(Uploader);
 
 // 导入格式化时间插件
 import moment from "moment"
@@ -37,6 +39,22 @@ Vue.filter("dateFormat", function(dataStr, pattern = "YYYY-MM-DD HH:mm:ss"){
     dataStr = parseInt(dataStr)*1000;
     return moment(dataStr).format(pattern);
 })
+
+// 导入复制文字插件
+import Clipboard from 'clipboard'
+
+// 在原型上设置一个复制的方法，调用时传入classname即可
+Vue.prototype.copy = function (className) {
+  var clipboard = new Clipboard('.' + className);
+  clipboard.on('success', e => {
+    Toast('复制成功');
+    clipboard.destroy();
+  })
+  clipboard.on('error', e => {
+    Toast('该浏览器不支持自动复制');
+    clipboard.destroy();
+  })
+}
 
 Vue.config.productionTip = false
 

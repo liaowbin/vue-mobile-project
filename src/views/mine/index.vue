@@ -13,7 +13,7 @@
         </p>
         <p class="code">邀请码：{{ userInfo.yqm }}</p>
       </div>
-      <div class="copy">复制链接</div>
+      <div class="copy" :data-clipboard-text="userInfo.yqm" @click="copy('copy')">复制链接</div>
     </div>
     <div class="box">
       <div class="account-info">
@@ -120,12 +120,19 @@ export default {
   },
   methods: {
     getUserInfo() {
+      this.$toast.loading({
+        message: '加载中...',
+        duration: 0,
+        forbidClick: true,
+      });
       this.$http.get(`Wap/Api/getUserInfo?userid=${this.$store.state.userId}`).then(response => {
         if (response.body.status) {
-            this.userInfo = response.body.data;
+          this.userInfo = response.body.data;
+          this.$toast.clear();
         }
       }, response => {
         this.$toast("获取失败！");
+        this.$toast.clear();
       });
     }
   },

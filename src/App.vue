@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <navbar :title="title" :leftText="isReturn ? '返回' : ''" :leftArrow="isReturn" @back="back"></navbar>
+    <navbar :title="$store.state.title" :leftText="isReturn ? '返回' : ''" :leftArrow="isReturn" @back="back"></navbar>
     <div class="main" :class="isLogin ? 'fixed-tabbar' : ''">
       <router-view/>
     </div>
@@ -41,7 +41,8 @@ export default {
     },
     getStatus() {
       // 设置哪些页面需要显示tabBar
-      this.title = this.$route.meta.title;
+      this.$store.commit('initTitle', this.$route.meta.title);
+
       let path = this.$route.path;
       if (path == "/home" || path == "/topup" || path == "/graborder" || path == "/recording" || path == "/mine") {
         this.isLogin = true;
@@ -80,11 +81,11 @@ export default {
     background-color: #f7f7f7;
   }
   .main {
-    // height: calc(100vh - 46px);
+    height: calc(100vh - 46px);
     padding-top: 46px;
   }
   .fixed-tabbar {
-    // height: calc(100vh - 46px - 50px);
+    height: calc(100vh - 46px - 50px);
     padding-bottom: 50px;
   }
 </style>

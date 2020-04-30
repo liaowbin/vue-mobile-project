@@ -60,21 +60,35 @@ export default {
   },
   methods: {
     getNoticeTip() {
+      this.$toast.loading({
+        message: '加载中...',
+        duration: 0,
+        forbidClick: true,
+      });
       this.$http.get("Wap/Api/getSystemNotice?id=10").then(response => {
         if (response.body.status) {
           this.cardContent = response.body.data.content;
+          this.$toast.clear();
         }
       }, response => {
         this.$toast("获取失败");
+        this.$toast.clear();
       })
     },
     getAccountCount() {
+      this.$toast.loading({
+        message: '加载中...',
+        duration: 0,
+        forbidClick: true,
+      });
       this.$http.get(`Wap/Api/getAccountCount?type=1&userid=${this.$store.state.userId}`).then(response => {
         if (response.body.status) {
           this.account = response.body.data;
+          this.$toast.clear();
         }
       }, response => {
         this.$toast("获取失败");
+        this.$toast.clear();
       })
     }
   },
