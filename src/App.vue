@@ -30,7 +30,7 @@ export default {
   watch: {
     $route(to, from) {
       // 监听路由一改变 显示对应的标题及判断是否需要返回
-      let noShowBackList = ['/', '/home', '/topup', '/graborder', '/recording', '/mine'];
+      let noShowBackList = ['/', '/home', '/topup', '/graborder', '/order', '/mine'];
       this.isReturn = (noShowBackList.indexOf(to.path) >-1 ? false : true );
       this.getStatus();
     }
@@ -44,7 +44,7 @@ export default {
       this.$store.commit('initTitle', this.$route.meta.title);
 
       let path = this.$route.path;
-      if (path == "/home" || path == "/topup" || path == "/graborder" || path == "/recording" || path == "/mine") {
+      if (path == "/home" || path == "/topup" || path == "/graborder" || path == "/order" || path == "/mine") {
         this.isLogin = true;
         // 监听路由变化让对应的tabbar高亮
         switch (path) {
@@ -57,7 +57,7 @@ export default {
           case '/graborder':
             this.active = 2;
             break;
-          case '/recording':
+          case '/order':
             this.active = 3;
             break;
           case '/mine':
