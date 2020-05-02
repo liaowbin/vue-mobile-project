@@ -22,32 +22,33 @@
           <b>{{ userInfo.money }}</b>
         </div>
         <div class="operation">
-          <van-button color="#9681fd" size="small" round>提现</van-button>
-          <van-button color="#7c61fd" size="small" round>充值</van-button>
+          <van-button color="#9681fd" size="small" round @click="$router.push({ path: '/topup/withdrawalmanage' });">提现</van-button>
+          <van-button color="#7c61fd" size="small" round @click="$router.push({ path: '/topup' });">充值</van-button>
         </div>
       </div>
       <div class="list-box">
         <van-grid :border="false" :column-num="4">
-          <van-grid-item>
+          <router-link to="/topup/accountdetails" tag="van-grid-item">
               <van-image :src="require('@/assets/images/balance.png')"/>
               <span>总收益</span>
               <b style="color: #816bfe">{{ userInfo.total_yj }}</b>
-          </van-grid-item>
-          <van-grid-item>
+          </router-link>
+          <router-link to="/topup/financialmanage" tag="van-grid-item">
               <van-image :src="require('@/assets/images/interest.png')"/>
               <span>利息宝</span>
               <b style="color: #ffa829">{{ userInfo.interest_money }}</b>
-          </van-grid-item>
-          <van-grid-item>
+          </router-link>
+          <router-link to="/topup/accountdetails" tag="van-grid-item">
               <van-image :src="require('@/assets/images/record.png')"/>
               <span>账户明细</span>
               <b style="color: #c01cff">-- --</b>
-          </van-grid-item>
-          <van-grid-item>
+          </router-link>
+          <router-link to="/order" tag="van-grid-item">
               <van-image :src="require('@/assets/images/frozen.png')"/>
               <span>冻结资金</span>
               <b style="color: #fa293a">{{ userInfo.forzen_money }}</b>
-          </van-grid-item>
+          </router-link>
+
         </van-grid>
       </div>
       <div class="service-center">

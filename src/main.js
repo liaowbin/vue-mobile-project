@@ -10,7 +10,7 @@ Vue.http.options.emulateJSON = true;
 
 import {
   Tabbar, TabbarItem, NavBar, Button, Field, Form, Checkbox, CheckboxGroup, Toast, Swipe, SwipeItem, Lazyload, Grid, GridItem, Image as VanImage,
-  Overlay, Loading, Tab, Tabs, NumberKeyboard, PullRefresh, NoticeBar, Dialog, Uploader   
+  Overlay, Loading, Tab, Tabs, NumberKeyboard, PullRefresh, NoticeBar, Dialog, Uploader, CountDown, SubmitBar
 } from 'vant';
 
 Vue.use(Tabbar);
@@ -31,6 +31,8 @@ Vue.use(PullRefresh);
 Vue.use(NoticeBar);
 Vue.use(Dialog);
 Vue.use(Uploader);
+Vue.use(CountDown);
+Vue.use(SubmitBar);
 
 // 导入格式化时间插件
 import moment from "moment"

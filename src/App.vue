@@ -8,7 +8,7 @@
         <van-tabbar-item to="home" icon="home-o">首页</van-tabbar-item>
         <van-tabbar-item to="topup" icon="balance-o">充值</van-tabbar-item>
         <van-tabbar-item to="graborder" icon="flag-o">抢单</van-tabbar-item>
-        <van-tabbar-item to="recording" icon="coupon-o">记录</van-tabbar-item>
+        <van-tabbar-item to="order" icon="coupon-o">记录</van-tabbar-item>
         <van-tabbar-item to="mine" icon="manager-o">我的</van-tabbar-item>
     </van-tabbar>
   </div>

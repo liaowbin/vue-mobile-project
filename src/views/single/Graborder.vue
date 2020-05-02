@@ -37,8 +37,7 @@
         </div>
       </div>
       <div class="operation">
-        <van-button round block color="#8c64fe">自动抢单</van-button>
-        <van-button round block color="#8c64fe" plain>停止抢单</van-button>
+        <van-button round block color="#8c64fe" @click="grabSheet">自动抢单</van-button>
       </div>
       <div class="card">
         <div class="title">备注说明</div>
@@ -51,7 +50,8 @@ export default {
   data() {
     return {
       account: {},
-      cardContent: ""
+      cardContent: "",
+      random: ["抢单成功", "喝杯茶攒攒人品吧！", "手慢了点哟，请耐心点！", "差点就抢到了"]
     };
   },
   created() {
@@ -90,7 +90,41 @@ export default {
         this.$toast("获取失败");
         this.$toast.clear();
       })
-    }
+    },
+    grabSheet() {
+      let index = Math.floor((Math.random()*this.random.length));
+      const toast = this.$toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true,
+        message: '倒计时 3 秒',
+      });
+      let second = 3;
+      const timer = setInterval(() => {
+        second--;
+        if (second) {
+          toast.message = `倒计时 ${second} 秒`;
+        } else {
+          clearInterval(timer);
+          this.$toast.clear();
+          if (index == 0) {
+            this.grabAction();
+          }else {
+            this.$toast(this.random[index]);
+          }
+        }
+      }, 1000);
+    },
+    grabAction() {
+      this.$http.get(`Wap/Api/grabAction?task_type=1&userid=${this.$store.state.userId}`).then(response => {
+        if (response.body.status) {
+          // this.account = response.body.data;
+          this.$toast(response.body.info);
+          this.$router.push({ path: '/order/orderdetails', query: { id: response.body.data }});
+        }
+      }, response => {
+        this.$toast("获取失败");
+      })
+    },
   },
 };
 </script>

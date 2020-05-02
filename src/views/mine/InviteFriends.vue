@@ -26,7 +26,7 @@ export default {
         duration: 0,
         forbidClick: true,
       });
-      this.$http.get(`Wap/Api/getShareQRCode?userid=${this.$store.state.userId}`).then(response => {
+      this.$http.get(`Wap/Api/getShareQRCode?userid=${this.$store.state.userId}&rnd=${Math.random()}`).then(response => {
         if (response.body.status) {
           this.shareCode = response.body.data;
           this.shareCode.yqm = JSON.parse(localStorage.getItem("userinfo")).yqm;

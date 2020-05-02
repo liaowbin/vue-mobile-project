@@ -8,7 +8,7 @@
             @refresh="onRefresh"
             >
             <div class="content">
-                <div class="list" v-for="value in orderList" :key="value.id">
+                <div class="list" v-for="value in orderList" :key="value.id" @click="orderDetails(value.id)">
                     <p class="time">{{ value.add_time | dateFormat }}</p>
                     <div class="con">
                         <van-image :src="resourceSrc + value.goods_pic">
@@ -67,6 +67,9 @@ export default {
         this.$toast.clear();
         this.$toast("获取失败");
       })
+    },
+    orderDetails(id) {
+        this.$router.push({ path: '/order/orderdetails', query: { id: id }});
     }
   }
 };

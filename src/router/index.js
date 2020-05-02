@@ -9,8 +9,10 @@ import Topup from '../views/topup/Topup.vue'
   import FinancialManage from '../views/topup/FinancialManage.vue'
   import WithdrawalManage from '../views/topup/WithdrawalManage.vue'
   import TopupSubmit from '../views/topup/TopupSubmit.vue'
+  import AccountDetails from '../views/topup/AccountDetails.vue'
 import Graborder from '../views/single/Graborder.vue'
 import Recording from '../views/order/Recording.vue'
+  import OrderDetails from '../views/order/OrderDetails.vue'
 import Mine from '../views/mine/index.vue'
   import InviteFriends from '../views/mine/InviteFriends.vue'
 
@@ -77,6 +79,14 @@ Vue.use(VueRouter)
     }
   },
   {
+    path: "/topup/accountdetails",
+    component: AccountDetails,
+    meta: {
+      title: "账户明细",
+      isLogin: true
+    }
+  },
+  {
     path: '/graborder',
     component: Graborder,
     meta: {
@@ -85,10 +95,18 @@ Vue.use(VueRouter)
     }
   },
   {
-    path: '/recording',
+    path: '/order',
     component: Recording,
     meta: {
       title: "记录",
+      isLogin: true
+    }
+  },
+  {
+    path: '/order/orderdetails',
+    component: OrderDetails,
+    meta: {
+      title: "订单详情",
       isLogin: true
     }
   },
